@@ -1,0 +1,67 @@
+
+make clean  清理编译过程残留文件
+
+make 编译文件
+
+编译好之后要 执行
+sudo cp test /test/
+
+模拟程序的修改
+1.修改副机数
+devDataSent.c
+
+void sent_test(void)
+{
+	uchar id = 0;
+	pduDevData *devData = (pduDevData*)malloc(sizeof(pduDevData));
+	memset(devData, 0, sizeof(pduDevData));
+
+	_devDataObj *ptr = &(devData->line);
+	init_data(ptr);
+	ptr = &(devData->output);
+	init_data(ptr);
+
+	devData->env.len = 4;
+	init_unit(&(devData->env.tem));
+	init_unit(&(devData->env.hum));
+
+	char *str = "cleve; cleve";
+	int i;
+	for(i=0; i<5; ++i) {                   //修改副机数，副机数为 循环次数-1            
+		sent_devData(i,devData);
+		//sent_str(i, 6, 0x11, strlen(str), str);
+	}
+
+	free(devData);
+}
+
+2.修改服务器地址
+udpHbPacker.c
+
+static char server_ip[20] = {"192.170.1.1"}; /*服务器IP地址*/  //修改此处
+
+3.修改数据发送速率
+udpsent.c
+
+int udp_clientSentData(uchar *send_data, uint len)
+{
+	int ret=0, sockfd=sock_fd;
+
+	ret = udp_sentCheck();	/*服务端检查*/
+	if(ret == true)
+	{
+		udp_initServerAddr();
+
+		/* 发送数据到服务远端 */
+		ret = sendto(sockfd, send_data, len, 0,
+				(struct sockaddr *)&server_addr, sizeof(struct sockaddr));
+		udp_udelay(5*1000);  // 短延时 //修改此处
+	}
+
+	return ret;
+}
+
+
+
+
+

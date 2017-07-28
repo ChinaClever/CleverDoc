@@ -1,0 +1,58 @@
+通过docker命令下载umbuntu操作系统的镜像
+docker pull ubuntu 
+
+列出本地主机上的已有镜像
+docker images
+
+删除指定ID的镜像
+docker rmi ID 
+
+一次性删除所有镜像
+docker rmi $(docker images -q)
+
+创建一个新容器
+sudo docker create -it ubuntu
+
+启动容器
+sudo docker start ID///sudo docker run ubuntu /bin/echo ‘hello world’
+oddrationale/docker
+
+中止运行中的容器
+docker stop ID
+
+查看本机上存在的所有容器
+docker ps -a -q
+
+进入已终止的容器，先要启动，然后
+docker attach ID///docker exec -ti ID /bin/bash 不会exit退出而终止容器
+也可以使用ctrl+p+q，同样可以退出容器而不中止
+
+以守护态形式在后台运行程序
+docker run -v /test:/soft -d -p 2001:2001 --net ww --ip 192.166.100.13 -ti ubuntu:14.04 /soft/edit
+
+创建带共享目录/test的容器
+docker run -it -v /test:/soft ubuntu /bin/bash
+
+
+删除指定ID的容器
+sudo docker rm e81
+
+一次性删除所有容器
+docker rm $(docker ps -a -q)
+
+利用ubuntu镜像创建一个容器，并启动一个终端允许用户交互
+sudo docker run -ti ubuntu /bin/bash
+        
+保存对容器的修改
+docker commit 698 learn/ping     698为安装完ping命令之后容器的id
+
+THE END!
+
+
+
+
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

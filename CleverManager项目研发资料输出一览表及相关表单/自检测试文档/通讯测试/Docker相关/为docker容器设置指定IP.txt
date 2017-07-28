@@ -1,0 +1,26 @@
+一.版本太低，不支持静态IP，所以第一步要安装最新版的Docker
+
+root@localhost:~# apt-get update
+root@localhost:~# apt-get install curl
+root@localhost:~# curl -fsSL https://get.docker.com/ | sh
+root@localhost:~# docker -v
+Docker version 1.10.3, build 20f81dd
+
+二：创建自定义网络
+
+备注：这里选取了172.18.0.0网段，也可以指定其他任意空闲的网段
+docker network create --subnet=172.18.0.0/16 shadownet
+
+三：在你自定义的网段选取任意IP地址作为你要启动的container的静态IP地址
+
+备注：这里在第二步中创建的网段中选取了172.18.0.10作为静态IP地址。这里以启动ubuntu：14.04为例。
+docker run -d -p 2001:2001 --net shadownet --ip 172.18.0.10 -ti ubuntu:14.04 /bin/bash
+
+四：运行上一步之后，不会进入容器，但会返回一个id，启动并运行即可
+  
+sudo docker start id
+sudo docker attach id
+
+ifconfig，你会发现容器ip已经设置为172.18.0.10
+
+TEH END!                                                                                                                                                                                          

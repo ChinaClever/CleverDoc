@@ -1,0 +1,2 @@
+每次修改过后都需要
+sudo cp test /test
