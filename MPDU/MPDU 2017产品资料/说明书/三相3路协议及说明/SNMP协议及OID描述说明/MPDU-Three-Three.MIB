@@ -1,0 +1,958 @@
+NETPDU-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    enterprises, Counter,
+    TimeTicks, Gauge                FROM RFC1155-SMI
+    OBJECT-TYPE                     FROM RFC-1212
+    sysUpTime, DisplayString	   FROM RFC1213-MIB
+TRAP-TYPE                           FROM RFC-1215;
+
+clever OBJECT IDENTIFIER ::= { enterprises 30966 }
+cleverPDU OBJECT IDENTIFIER ::= { clever 10 }
+msPDU OBJECT IDENTIFIER ::= { cleverPDU 2 }
+deviceinfo OBJECT IDENTIFIER ::= { msPDU 1 }
+totalinputinfo OBJECT IDENTIFIER ::= { msPDU 2 }
+groupinputinfo OBJECT IDENTIFIER ::= { msPDU 3 }
+outputCurrent OBJECT IDENTIFIER ::= { msPDU 4 }
+outputPower OBJECT IDENTIFIER ::= { msPDU 5 }
+outputEnergy OBJECT IDENTIFIER ::= { msPDU 6 }
+outputswitch OBJECT IDENTIFIER ::= { msPDU 7 }
+temhumstatus OBJECT IDENTIFIER ::= { msPDU 8 }
+groupinputCurrentinfo OBJECT IDENTIFIER ::= { groupinputinfo 1 }
+groupinputPowerinfo OBJECT IDENTIFIER ::= { groupinputinfo 2 }
+groupinputEnergyinfo OBJECT IDENTIFIER ::= { groupinputinfo 3 }
+outputCurrentOne OBJECT IDENTIFIER ::= { outputCurrent 1 }
+outputCurrentTwo OBJECT IDENTIFIER ::= { outputCurrent 2 }
+outputCurrentThree OBJECT IDENTIFIER ::= { outputCurrent 3 }
+outputPowerOne OBJECT IDENTIFIER ::= { outputPower 1 }
+outputPowerTwo OBJECT IDENTIFIER ::= { outputPower 2 }
+outputPowerThree OBJECT IDENTIFIER ::= { outputPower 3 }
+outputEnergyOne OBJECT IDENTIFIER ::= { outputEnergy 1 }
+outputEnergyTwo OBJECT IDENTIFIER ::= { outputEnergy 2 }
+outputEnergyThree OBJECT IDENTIFIER ::= { outputEnergy 3 }
+outputswitchOne OBJECT IDENTIFIER ::= { outputswitch 1 }
+outputswitchTwo OBJECT IDENTIFIER ::= { outputswitch 2 }
+outputswitchThree OBJECT IDENTIFIER ::= { outputswitch 3 }
+temhum OBJECT IDENTIFIER ::= { temhumstatus 1 }
+
+DeviceName OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "device name."
+    ::= { deviceinfo 1 }
+LINE_NUM OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "LINE NUM."
+    ::= { deviceinfo 2 }
+DeviceType  OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "device type."
+    ::= { deviceinfo 3 }
+DeviceBreaker OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "device hardware structure."
+    ::= { deviceinfo 4 }	
+OutputNum  OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "outputnum."
+    ::= { deviceinfo 5 }
+	
+InputVoltageL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total votage A."
+    ::= { totalinputinfo 1 }
+InputVoltageL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total votage B."
+    ::= { totalinputinfo 2 }
+InputVoltageL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total votage C."
+    ::= { totalinputinfo 3 }
+InputCurrentL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current A.this value enlagrge 10 times"
+    ::= { totalinputinfo 4 }	
+InputCurrentL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current B.this value enlagrge 10 times"
+    ::= { totalinputinfo 5 }
+InputCurrentL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current C.this value enlagrge 10 times"
+    ::= { totalinputinfo 6 }	
+InputPowerL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power A."
+    ::= { totalinputinfo 7 }	
+InputPowerL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power B."
+    ::= { totalinputinfo 8 }
+InputPowerL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power C."
+    ::= { totalinputinfo 9 }	
+PowerFactorL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power fact A."
+    ::= { totalinputinfo 10 }	
+PowerFactorL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power fact B."
+    ::= { totalinputinfo 11 }
+PowerFactorL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power fact C."
+    ::= { totalinputinfo 12 }	
+InputEnergyL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy A."
+    ::= { totalinputinfo 13 }	
+InputEnergyL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy B."
+    ::= { totalinputinfo 14 }
+InputEnergyL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy C."
+    ::= { totalinputinfo 15 }
+
+RoadCurrentL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "first group currect.this value enlagrge 10 times"
+    ::= { groupinputCurrentinfo 1 }
+RoadCurrentL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "second group currect.this value enlagrge 10 times"
+    ::= { groupinputCurrentinfo 2 }			
+RoadCurrentL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Third group currect.this value enlagrge 10 times"
+    ::= { groupinputCurrentinfo 3 }	
+RoadPowerL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "first group power ."
+    ::= { groupinputPowerinfo 1 }
+RoadPowerL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "second group power ."
+    ::= { groupinputPowerinfo 2 }
+RoadPowerL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Third group power ."
+    ::= { groupinputPowerinfo 3 }	
+RoadEnergyL1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "first group energy ."
+    ::= { groupinputEnergyinfo 1 }
+RoadEnergyL2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "second group energy ."
+    ::= { groupinputEnergyinfo 2 }
+RoadEnergyL3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Third group energy ."
+    ::= { groupinputEnergyinfo 3 }
+	
+OutputCurrent1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 1 }	
+OutputCurrent2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 2 }
+OutputCurrent3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 3 }	
+OutputCurrent4 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 4 }	
+OutputCurrent5 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 5 }	
+OutputCurrent6 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 6 }
+OutputCurrent7 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 7 }	
+OutputCurrent8 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentOne 8 }
+			
+OutputCurrent9 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 1 }	
+OutputCurrent10 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 2 }
+OutputCurrent11 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 3 }	
+OutputCurrent12 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 4 }	
+OutputCurrent13 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 5 }	
+OutputCurrent14 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 6 }
+OutputCurrent15 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 7 }	
+OutputCurrent16 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentTwo 8 }
+		
+OutputCurrent17 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 1 }	
+OutputCurrent18 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 2 }
+OutputCurrent19 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 3 }	
+OutputCurrent20 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 4 }
+		
+OutputCurrent21 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 5 }	
+OutputCurrent22 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 6 }
+OutputCurrent23 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 7 }	
+OutputCurrent24 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total current.this value enlagrge 10 times"
+    ::= { outputCurrentThree 8 }													
+	
+OutputPower1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 1 }	
+OutputPower2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 2 }
+OutputPower3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 3 }
+OutputPower4 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 4 }
+OutputPower5 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 5 }	
+OutputPower6 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 6 }
+OutputPower7 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 7 }
+OutputPower8 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerOne 8 }
+		
+OutputPower9 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 1 }	
+OutputPower10 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 2 }
+OutputPower11 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 3 }
+OutputPower12 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 4 }
+OutputPower13 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 5 }	
+OutputPower14 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 6 }
+OutputPower15 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 7 }
+OutputPower16 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerTwo 8 }
+		
+OutputPower17 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 1 }	
+OutputPower18 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 2 }
+OutputPower19 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 3 }
+OutputPower20 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 4 }
+OutputPower21 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 5 }	
+OutputPower22 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 6 }
+OutputPower23 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 7 }
+OutputPower24 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total power.this value enlagrge 10 times"
+    ::= { outputPowerThree 8 }	
+	
+OutputEnergy1 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 1 }	
+OutputEnergy2 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 2 }
+OutputEnergy3 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 3 }
+OutputEnergy4 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 4 }
+OutputEnergy5 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 5 }	
+OutputEnergy6 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 6 }
+OutputEnergy7 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 7 }
+OutputEnergy8 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyOne 8 }	
+		
+OutputEnergy9 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 1 }	
+OutputEnergy10 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 2 }
+OutputEnergy11 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 3 }
+OutputEnergy12 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 4 }
+OutputEnergy13 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 5 }	
+OutputEnergy14 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 6 }
+OutputEnergy15 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 7 }
+OutputEnergy16 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyTwo 8 }	
+	
+OutputEnergy17 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 1 }	
+OutputEnergy18 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 2 }
+OutputEnergy19 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 3 }
+OutputEnergy20 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 4 }
+OutputEnergy21 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 5 }	
+OutputEnergy22 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 6 }
+OutputEnergy23 OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 7 }
+OutputEnergy24  OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "total energy.this value enlagrge 10 times"
+    ::= { outputEnergyThree 8 }	
+
+Switch1 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 1 ."
+    ::= { outputswitchOne 1 }
+Switch2 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 2 ."
+    ::= { outputswitchOne 2 }
+Switch3 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 3 ."
+    ::= { outputswitchOne 3 }
+Switch4 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 4 ."
+    ::= { outputswitchOne 4 }	
+Switch5 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 5 ."
+    ::= { outputswitchOne 5 }
+Switch6 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 6 ."
+    ::= { outputswitchOne 6 }
+Switch7 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 7 ."
+    ::= { outputswitchOne 7 }
+Switch8 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 8 ."
+    ::= { outputswitchOne 8 }	
+		
+Switch9 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 9 ."
+    ::= { outputswitchTwo 1 }
+Switch10 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 10 ."
+    ::= { outputswitchTwo 2 }
+Switch11 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 11 ."
+    ::= { outputswitchTwo 3 }
+Switch12 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 12 ."
+    ::= { outputswitchTwo 4 }	
+Switch13 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 13 ."
+    ::= { outputswitchTwo 5 }
+Switch14 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 14 ."
+    ::= { outputswitchTwo 6 }
+Switch15 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 15 ."
+    ::= { outputswitchTwo 7 }
+	
+Switch16 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 16 ."
+    ::= { outputswitchTwo 8 }	
+Switch17 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            " output switch 17 ."
+    ::= { outputswitchThree 1 }
+Switch18 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 18 ."
+    ::= { outputswitchThree 2 }
+Switch19 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 19 ."
+    ::= { outputswitchThree 3 }
+Switch20 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 20 ."
+    ::= { outputswitchThree 4 }	
+Switch21 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 21 ."
+    ::= { outputswitchThree 5 }
+Switch22 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 22 ."
+    ::= { outputswitchThree 6 }
+Switch23 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 23 ."
+    ::= { outputswitchThree 7}
+Switch24 OBJECT-TYPE
+    SYNTAX DisplayString (SIZE (255))
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "output switch 24 ."
+    ::= { outputswitchThree 8 }					
+TemperatureOne OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Temperature One ."
+    ::= { temhum 1 }										
+TemperatureTwo OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Temperature Two ."
+    ::= { temhum 2 }
+HumidityOne OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Humidity One ."
+    ::= { temhum 3 }										
+HumidityTwo OBJECT-TYPE
+    SYNTAX INTEGER (0..65535)
+    ACCESS read-write
+    STATUS optional
+    DESCRIPTION
+            "Humidity Two ."
+    ::= { temhum 4 }	
+
+END
+
